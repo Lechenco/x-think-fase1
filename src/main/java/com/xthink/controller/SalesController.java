@@ -2,6 +2,7 @@ package com.xthink.controller;
 
 import java.text.Normalizer.Form;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.xthink.domain.Sale;
 import com.xthink.domain.Salesman;
@@ -45,5 +46,23 @@ public class SalesController {
             return -1;
         }
         return 0;
+    }
+
+    @RequestMapping(value = "/list")
+    public String listBetweenDates(String start, String end) {
+        String response = "";
+
+        LocalDate startDate, endDate;
+        startDate = LocalDate.parse(start);
+        endDate = LocalDate.parse(end);
+        List<Object[]> obj = saleRepository.selectSalesBetweenDate(startDate, endDate);
+        System.out.println("+++++++++++++++++++OOOOOOOOOOOO+++++++++++++");
+        for (Object[] o : obj) {
+            Salesman s = (Salesman) o[0];
+            System.out.println(s.getFirstName() + " " + (double) o[1] + " " +
+                        (long) o[2]);
+        }
+
+        return "";
     }
 }

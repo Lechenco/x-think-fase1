@@ -25,10 +25,35 @@ public class SalesControllerTest {
     @Test
     public void getIndex() {
         try {
-            mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+            mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
                     .andExpect(content().string(equalTo("Sales System: X-Think Store")));
         } catch (Exception e) {
             fail("Unespected answer to index");
+        }
+    }
+
+    @Test
+    public void newSale() {
+        try {
+            mvc.perform(MockMvcRequestBuilders.post("/insert")
+                .param("salesmanId", "1").param("price", "100.0"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("0")));
+        } catch (Exception e) {
+            fail("Fail on insert new Sale in the Database" + 
+                e.getLocalizedMessage());
+        }
+    }
+
+    @Test
+    public void listBetweenDates() {
+        try {
+            mvc.perform(MockMvcRequestBuilders.get("/list")
+                .param("start", "2019-01-01").param("end", "2019-12-31"))
+                .andExpect(status().isOk());
+        } catch (Exception e) {
+            fail("Error in list Between Dates" + e.getLocalizedMessage());
         }
     }
     
