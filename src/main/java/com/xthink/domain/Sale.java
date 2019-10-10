@@ -20,6 +20,8 @@ public class Sale {
     @ManyToOne
     private Salesman salesman;
 
+    public Sale() {}
+
     public Sale(LocalDate saleDate, float price, Salesman salesman) {
         this.saleDate = saleDate;
         this.price = price;

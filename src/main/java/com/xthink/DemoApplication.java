@@ -21,4 +21,6 @@ public class DemoApplication {
 			repository.save(new Salesman("Joao", "Ricardo"));
 		};
 	}
+
+	
 }
