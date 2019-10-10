@@ -1,4 +1,4 @@
-package com.xthink.vendas;
+package com.xthink;
 
 import com.xthink.domain.Salesman;
 import com.xthink.repositories.SalesmanRepository;
@@ -8,9 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-// TODO - Application do not automatic recognized Beans 
-@SpringBootApplication(scanBasePackages = {"com.xthink.repositories", 
-"com.xthink.configuration", "com.xthink.vendas"})
+@SpringBootApplication
 public class DemoApplication {
 
 	public static void main(String[] args) {

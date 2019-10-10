@@ -11,6 +11,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan(basePackages = {"com.xthink.domain"})
 @EnableJpaRepositories(basePackages = {"com.xthink.repositories"})
 @EnableTransactionManagement
-public class RepositoryConfiguration {
+public class RepositoryConfiguration { 
 
 }

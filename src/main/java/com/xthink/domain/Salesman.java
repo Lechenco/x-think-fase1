@@ -11,6 +11,7 @@ public class Salesman {
     private String firstName;
     private String lastName;
 
+    public Salesman() {}
 
     public Salesman(String firstName, String lastName) {
         this.firstName = firstName;
