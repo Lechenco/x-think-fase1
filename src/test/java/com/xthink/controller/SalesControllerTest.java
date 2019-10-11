@@ -25,9 +25,11 @@ public class SalesControllerTest {
     @Test
     public void getIndex() {
         try {
-            mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
+            mvc.perform(MockMvcRequestBuilders.get("/")
+                .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
-                    .andExpect(content().string(equalTo("Sales System: X-Think Store")));
+                    .andExpect(content()
+                        .string(equalTo("Sales System: X-Think Store")));
         } catch (Exception e) {
             fail("Unespected answer to index");
         }
@@ -50,10 +52,41 @@ public class SalesControllerTest {
     public void listBetweenDates() {
         try {
             mvc.perform(MockMvcRequestBuilders.get("/list")
-                .param("start", "2019-01-01").param("end", "2019-12-31"))
-                .andExpect(status().isOk());
+                .param("start", "2019-09-15").param("end", "2019-10-20"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo(
+                    "Nome: Maria Souza Total Vendas: 10 Med. Vendas por Dia: 0.2857142857142857\n" +
+                    "Nome: Carlos Ribeiro Total Vendas: 6 Med. Vendas por Dia: 0.17142857142857143\n" + 
+                    "Nome: Antonio João Total Vendas: 2 Med. Vendas por Dia: 0.05714285714285714\n")));
         } catch (Exception e) {
             fail("Error in list Between Dates" + e.getLocalizedMessage());
+        }
+    }
+
+    @Test
+    public void listBetweenCloseDates() {
+        try {
+            mvc.perform(MockMvcRequestBuilders.get("/list")
+                .param("start", "2019-10-01").param("end", "2019-10-10"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo(
+                    "Nome: Maria Souza Total Vendas: 4 Med. Vendas por Dia: 0.4444444444444444\n" +
+                    "Nome: Carlos Ribeiro Total Vendas: 2 Med. Vendas por Dia: 0.2222222222222222\n" + 
+                    "Nome: Antonio João Total Vendas: 2 Med. Vendas por Dia: 0.2222222222222222\n")));
+        } catch (Exception e) {
+            fail("Error in list Between Close Dates" + e.getLocalizedMessage());
+        }
+    }
+
+    @Test
+    public void listBetweenDatesEmpty() {
+        try {
+            mvc.perform(MockMvcRequestBuilders.get("/list")
+                .param("start", "2019-01-01").param("end", "2019-01-01"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("")));
+        } catch (Exception e) {
+            fail("List Between Dates throws Exception");
         }
     }
     

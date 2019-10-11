@@ -1,7 +1,10 @@
 package com.xthink.repositories;
 
+import static org.junit.Assert.assertEquals;
+
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.List;
 
 import com.xthink.configuration.RepositoryConfiguration;
 import com.xthink.domain.*;
@@ -42,29 +45,26 @@ public class SaleRepositoryTest {
 
         System.out.println(maria.getFirstName() + maria.getLastName() + maria.getId());
 
-        Sale sale = new Sale();
-        sale.setPrice((float) 1000.0);
-        sale.setSaleDate(LocalDate.of(2019, 06, 21));
-        sale.setSalesman(maria);
-        saleRepository.save(sale);
-
-        sale = new Sale();
-        sale.setPrice((float) 500.0);
-        sale.setSaleDate(LocalDate.of(2019, 06, 30));
-        sale.setSalesman(maria);
-        saleRepository.save(sale);
-
-        sale = new Sale();
-        sale.setPrice((float) 2000.0);
-        sale.setSaleDate(LocalDate.of(2019, 07, 02));
-        sale.setSalesman(carlos);
-        saleRepository.save(sale);
+        saleRepository.save(new Sale(LocalDate.of(2019, 06, 21), 1000, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 06, 30), 500, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 07, 02), 2000, carlos));
     }
 
     @After
     public void cleanDB() {
         saleRepository.deleteAll();
         salemanRepository.deleteAll();
+    }
+
+
+    @Test
+    public void selectSalesBetweenDatesTest() {
+        List<Object[]> obj = saleRepository.selectSalesBetweenDate(
+                LocalDate.of(2019, 06, 02), LocalDate.of(2019, 06, 30));
+
+        assertEquals("Size of List unespected", 1, obj.size());
+        assertEquals("Number of sales to first row with wrong answer",
+                 (long) 2, obj.get(0)[1]);
     }
 
     @Test

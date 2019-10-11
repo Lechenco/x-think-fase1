@@ -1,7 +1,7 @@
 package com.xthink.controller;
 
-import java.text.Normalizer.Form;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import com.xthink.domain.Sale;
@@ -10,8 +10,6 @@ import com.xthink.repositories.SaleRepository;
 import com.xthink.repositories.SalesmanRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,19 +48,25 @@ public class SalesController {
 
     @RequestMapping(value = "/list")
     public String listBetweenDates(String start, String end) {
-        String response = "";
-
         LocalDate startDate, endDate;
         startDate = LocalDate.parse(start);
         endDate = LocalDate.parse(end);
+        long numOfDays = startDate.until(endDate, ChronoUnit.DAYS);
+
+        // Object array: [0] - Salesman; [1] - number of sales
         List<Object[]> obj = saleRepository.selectSalesBetweenDate(startDate, endDate);
-        System.out.println("+++++++++++++++++++OOOOOOOOOOOO+++++++++++++");
+        
+        return responseFromListObjects(obj, numOfDays);
+    }
+
+    private String responseFromListObjects(List<Object[]> obj, long numOfDays) {
+        String response = "";
         for (Object[] o : obj) {
             Salesman s = (Salesman) o[0];
-            System.out.println(s.getFirstName() + " " + (double) o[1] + " " +
-                        (long) o[2]);
+            response += "Nome: " + s.toString() + " ";
+            response += "Total Vendas: " + (long) o[1] + " "; 
+            response += "Med. Vendas por Dia: " + ((long) o[1]) / (double) numOfDays + "\n";
         }
-
-        return "";
+        return response;
     }
 }

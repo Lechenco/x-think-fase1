@@ -11,7 +11,7 @@ import com.xthink.domain.Sale;
 
 public interface SaleRepository extends CrudRepository<Sale, Long> {
 
-    @Query (value = "SELECT s.salesman ,SUM(s.price), COUNT(s.salesman.id) FROM Sale s " +
+    @Query (value = "SELECT s.salesman, COUNT(s.salesman.id) FROM Sale s " +
     "WHERE s.saleDate BETWEEN :start AND :end " +
     "GROUP BY s.salesman.id")
     List<Object[]> selectSalesBetweenDate(@Param("start") LocalDate start,

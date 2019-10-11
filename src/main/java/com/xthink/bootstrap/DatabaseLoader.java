@@ -38,33 +38,34 @@ public class DatabaseLoader implements ApplicationListener<ContextRefreshedEvent
         
         salesmanRepository.save(new Salesman("Maria", "Souza"));
         salesmanRepository.save(new Salesman("Carlos", "Ribeiro"));
-        // salemanRepository.save(new Salesman("Antonio", "João"));
+        salesmanRepository.save(new Salesman("Antonio", "João"));
 
         Iterator<Salesman> iterator = salesmanRepository.findAll().iterator();
         Salesman maria = iterator.next();
         Salesman carlos = iterator.next();
+        Salesman antonio = iterator.next();
 
-        System.out.println(maria.getFirstName() + maria.getLastName() + maria.getId());
-
-        Sale sale = new Sale();
-        sale.setPrice((float) 1000.0);
-        sale.setSaleDate(LocalDate.of(2019, 06, 21));
-        sale.setSalesman(maria);
-        saleRepository.save(sale);
-
-        sale = new Sale();
-        sale.setPrice((float) 500.0);
-        sale.setSaleDate(LocalDate.of(2019, 06, 30));
-        sale.setSalesman(maria);
-        saleRepository.save(sale);
-
-        sale = new Sale();
-        sale.setPrice((float) 2000.0);
-        sale.setSaleDate(LocalDate.of(2019, 07, 02));
-        sale.setSalesman(carlos);
-        saleRepository.save(sale);
-
+        // Maria Sales
         saleRepository.save(new Sale(LocalDate.of(2019, 10, 15), 30, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 12), 410, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 01), 10, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 07), 1250, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 07), 40, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 9), 30, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 13), 300, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 13), 120, maria));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 13), 330, maria));
+
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 15), 430, carlos));
+        saleRepository.save(new Sale(LocalDate.of(2019, 9, 30), 320, carlos));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 04), 310, carlos));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 17), 20, carlos));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 02), 5, carlos));
+        saleRepository.save(new Sale(LocalDate.of(2019, 9, 30), 10, carlos));
+        
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 21), 100, antonio));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 04), 130, antonio));
+        saleRepository.save(new Sale(LocalDate.of(2019, 10, 05), 570, antonio));
     }
 
 }
